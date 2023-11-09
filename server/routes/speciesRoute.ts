@@ -1,6 +1,6 @@
 import express from 'express'
 
-import connection from '../db/connection'
+import * as db from '../db/endangeredSpecies'
 
 const router = express.Router()
 
@@ -9,9 +9,8 @@ const router = express.Router()
 router.get('/', async (req, res) => {
   try {
     // Query the database for endangered species
-    const species = await connection('endangered_species').select('*')
-
-    // Send the species data as a JSON response
+    const species = await db.getEndangeredSpecies()
+// Send the species data as a JSON response
     res.json(species)
 
     console.log(species)
@@ -21,3 +20,5 @@ router.get('/', async (req, res) => {
 })
 
 export default router
+
+
