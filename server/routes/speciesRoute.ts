@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     // Query the database for endangered species
     const species = await db.getEndangeredSpecies()
     // Send the species data as a JSON response
-    res.json(species)
+    res.json({species})
 
     console.log(species)
   } catch (error) {
