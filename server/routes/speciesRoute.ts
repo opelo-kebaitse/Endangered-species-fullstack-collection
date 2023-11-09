@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
   try {
     // Query the database for endangered species
     const species = await db.getEndangeredSpecies()
-// Send the species data as a JSON response
+    // Send the species data as a JSON response
     res.json(species)
 
     console.log(species)
@@ -20,5 +20,3 @@ router.get('/', async (req, res) => {
 })
 
 export default router
-
-
