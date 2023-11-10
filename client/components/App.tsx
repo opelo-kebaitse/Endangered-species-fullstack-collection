@@ -1,4 +1,6 @@
+import { Outlet } from 'react-router-dom'
 import EndangeredSpeciesList from './EndangeredSpeciesList'
+import Nav from './Nav'
 
 function App() {
   return (
@@ -9,6 +11,8 @@ function App() {
       <section className="main">
         <EndangeredSpeciesList />
       </section>
+      <Nav/>
+      {/* <Outlet /> */}
     </>
   )
 }

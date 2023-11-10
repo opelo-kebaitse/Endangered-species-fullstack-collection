@@ -40,9 +40,9 @@ export default function EndangeredSpeciesList() {
             <p>Population: {species.population}</p>
           </li>
         ))}
+
+        
       </ul>
     </div>
   )
 }
-
-

@@ -1,7 +1,16 @@
+import connection from './connection'
+import { NewEndangeredSpecies } from '../../models/endangeredSpecies'
 
-import connection from "./connection";
+export async function getEndangeredSpecies(db = connection) {
+  return db('endangered_species').select('*')
+}
 
-export async function getEndangeredSpecies(db = connection){
-
-return db ('endangered_species').select('*')
+export async function addEndangeredSpecies(
+  newEndangeredSpecies: NewEndangeredSpecies,
+  db = connection
+) {
+  return db('endangered_species').insert({
+    name: newEndangeredSpecies.name,
+    population: newEndangeredSpecies.population,
+  })
 }
