@@ -12,7 +12,7 @@ function App() {
         <EndangeredSpeciesList />
       </section>
       <Nav/>
-      {/* <Outlet /> */}
+      <Outlet />
     </>
   )
 }

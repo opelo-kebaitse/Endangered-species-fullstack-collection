@@ -6,7 +6,7 @@ import { NewEndangeredSpecies } from '../../models/endangeredSpecies'
 const AddEndangeredSpeciesForm = () => {
   const [formData, setFormData] = useState({
     name: '',
-    population: '',
+    population: 0,
   });
 
   const queryClient = useQueryClient()
@@ -16,7 +16,7 @@ const AddEndangeredSpeciesForm = () => {
 
       setFormData({
         name: '',
-        population: '',
+        population: 0,
       })
     },
   })

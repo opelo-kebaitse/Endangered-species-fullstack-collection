@@ -16,6 +16,6 @@ export async function addEndangeredSpecies(
 ) {
   const res = await request
     .post(`${rootUrl}/species`)
-    .send(newEndangeredSpecies)
-  return res.body.newEndangeredSpecies
+    .send({newEndangeredSpecies})
+  return res.body
 }
