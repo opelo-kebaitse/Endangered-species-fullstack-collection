@@ -1,7 +1,7 @@
 import express from 'express'
 
 import * as db from '../db/endangeredSpecies'
-import { EndangeredSpeciesData} from '../../models/endangeredSpecies'
+import { EndangeredSpeciesData } from '../../models/endangeredSpecies'
 
 const router = express.Router()
 
@@ -37,17 +37,16 @@ router.post('/', async (req, res) => {
     res.status(201).json({ newEndangeredSpecies: newEndangeredSpecies })
   } catch (error) {
     console.error('Error adding endangered species:', error)
-    res.status(500).json({ error: 'Failed to add endangered animal' })
+    res.status(500).json({ error: 'Failed to add endangered species' })
   }
 })
 
-
 // Route to update endangered species data
 
-
 router.put('/:id', async (req, res) => {
-
-  const {endangeredSpecies} = req.body as {endangeredSpecies: EndangeredSpeciesData}
+  const { endangeredSpecies } = req.body as {
+    endangeredSpecies: EndangeredSpeciesData
+  }
 
   const id = Number(req.params.id)
 
@@ -58,14 +57,30 @@ router.put('/:id', async (req, res) => {
 
   try {
     await db.updateEndangeredSpecies(id, endangeredSpecies)
-    res.status(201).json({ endangeredSpecies: endangeredSpecies})
+    res.status(201).json({ endangeredSpecies: endangeredSpecies })
   } catch (error) {
     console.error('Error adding endangered species:', error)
-    res.status(500).json({ error: 'Failed to update endangered animal' })
+    res.status(500).json({ error: 'Failed to update' })
   }
 })
 
+// Route to delete endangered species data
 
+router.delete('/:id', async (req, res) => {
+  const id = Number(req.params.id)
+  if (!id) {
+    console.error('Invalid species ID provided')
+    return res.status(400).json({ error: 'Bad request' })
+  }
 
+  try {
+    await db.deleteEndangeredSpecies(id)
+    res.sendStatus(200)
+  } catch (error) {
+    console.error('Error deleting endangered species:', error)
+
+    res.status(500).json({ error: 'Failed to delete' })
+  }
+})
 
 export default router

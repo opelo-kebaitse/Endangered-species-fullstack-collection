@@ -1,6 +1,9 @@
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { getEndangeredSpecies } from '../apis/endangeredSpecies'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  deleteEndangeredSpecies,
+  getEndangeredSpecies,
+} from '../apis/endangeredSpecies'
 import UpdateEndangeredSpeciesForm from './UpdateEndangeredSpeciesForm'
 import { EndangeredSpecies } from '../../models/endangeredSpecies'
 
@@ -27,6 +30,15 @@ export default function EndangeredSpeciesList() {
     show: 'none',
   })
 
+  // delete data using mutation
+  const queryClient = useQueryClient()
+  const mutation = useMutation(deleteEndangeredSpecies, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['species'])
+      setForm({ selectedSpecies: null, show: 'none' }) // Close the form after successful delete
+    },
+  })
+
   if (error instanceof Error) {
     return <p>Something went wrong: {error.message}</p>
   }
@@ -40,6 +52,14 @@ export default function EndangeredSpeciesList() {
     setForm({ selectedSpecies, show: 'update' })
   }
 
+
+  // Function to handle the delete button click
+
+  const handleDeleteClick = async (id: number) => {
+      await mutation.mutate(id); // Initiate the deletion mutation
+    }
+
+  
   return (
     <div>
       <ul>
@@ -48,6 +68,8 @@ export default function EndangeredSpeciesList() {
             <p>Name: {species.name}</p>
             <p>Population: {species.population}</p>
             <button onClick={() => handleUpdateClick(species)}>Update</button>
+            <button onClick={() => handleDeleteClick(species.id)}>Delete</button>
+
           </li>
         ))}
       </ul>

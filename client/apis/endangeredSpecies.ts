@@ -29,3 +29,9 @@ export async function updateEndangeredSpecies(params: { id: number; updatedEndan
 
   return res.body.endangeredSpecies;
 }
+
+
+export async function deleteEndangeredSpecies(id:number){
+  const res = await request.delete(`${rootUrl}/species/${id}`)
+  return res.body
+}

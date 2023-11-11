@@ -29,3 +29,10 @@ export async function updateEndangeredSpecies(
       population: updatedEndangeredSpecies.population,
     })
 }
+
+
+export async function deleteEndangeredSpecies(id:number, db = connection){
+return db('endangered_species')
+.where({id})
+.del()
+}
