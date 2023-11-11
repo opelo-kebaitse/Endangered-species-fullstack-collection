@@ -1,7 +1,7 @@
 import request from 'superagent'
 import {
   EndangeredSpecies,
-  NewEndangeredSpecies,
+  EndangeredSpeciesData,
 } from '../../models/endangeredSpecies'
 
 const rootUrl = '/api/v1'
@@ -12,10 +12,20 @@ export async function getEndangeredSpecies() {
 }
 
 export async function addEndangeredSpecies(
-  newEndangeredSpecies: NewEndangeredSpecies
+  newEndangeredSpecies: EndangeredSpeciesData
 ) {
   const res = await request
     .post(`${rootUrl}/species`)
     .send({newEndangeredSpecies})
-  return res.body
+  return res.body.newEndangeredSpecies
+}
+
+export async function updateEndangeredSpecies(params: { id: number; updatedEndangeredSpecies: EndangeredSpeciesData }) {
+  const { id, updatedEndangeredSpecies } = params;
+  
+  const res = await request
+    .put(`${rootUrl}/species/${id}`)
+    .send({ endangeredSpecies: updatedEndangeredSpecies });
+
+  return res.body.endangeredSpecies;
 }

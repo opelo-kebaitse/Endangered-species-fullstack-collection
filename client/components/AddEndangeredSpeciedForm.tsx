@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { addEndangeredSpecies } from '../apis/endangeredSpecies'
-import { NewEndangeredSpecies } from '../../models/endangeredSpecies'
+import { EndangeredSpeciesData } from '../../models/endangeredSpecies';
 
 const AddEndangeredSpeciesForm = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<EndangeredSpeciesData>({
     name: '',
     population: 0,
   });

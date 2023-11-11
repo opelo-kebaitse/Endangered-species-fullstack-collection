@@ -1,48 +1,65 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getEndangeredSpecies } from '../apis/endangeredSpecies'
+import UpdateEndangeredSpeciesForm from './UpdateEndangeredSpeciesForm'
+import { EndangeredSpecies } from '../../models/endangeredSpecies'
 
-// interface EndangeredSpecies {
-//   id: number;
-//   name: string;
-//   population: number;
-// }
+type FormState =
+  | {
+      selectedSpecies: EndangeredSpecies
+      show: 'selected'
+    }
+  | {
+      selectedSpecies: null
+      show: 'update' | 'none'
+    }
 
 export default function EndangeredSpeciesList() {
   const {
     data: species,
     isLoading,
     error,
-  } = useQuery(['endangeredSpecies'], getEndangeredSpecies)
+  } = useQuery(['species'], getEndangeredSpecies)
+
+  // State to manage the selected species for update
+  const [form, setForm] = useState<FormState>({
+    selectedSpecies: null,
+    show: 'none',
+  })
 
   if (error instanceof Error) {
-    return <p> Something went wrong: {error.message}</p>
+    return <p>Something went wrong: {error.message}</p>
   }
 
   if (!species || isLoading) {
-    return <p> Still loading ... </p>
+    return <p>Still loading ...</p>
   }
 
-  // const speciesData: EndangeredSpecies[] = [
-  //   { id: 1, name: 'Sumatran Rhino', population: 80 },
-  //   { id: 2, name: 'Amur Leopard', population: 84 },
-  //   { id: 3, name: 'Blue Whale', population: 10000 },
-  //   { id: 4, name: 'Giant Panda', population: 1864 },
-  //   { id: 5, name: 'Hawksbill Turtle', population: 8000 }
-  // ];
+  // Function to handle the update button click
+  const handleUpdateClick = (selectedSpecies: null) => {
+    setForm({ selectedSpecies, show: 'update' })
+  }
 
   return (
     <div>
-      <h2>Endangered Species List</h2>
       <ul>
         {species.map((species) => (
           <li key={species.id}>
             <p>Name: {species.name}</p>
             <p>Population: {species.population}</p>
+            <button onClick={() => handleUpdateClick(species)}>Update</button>
           </li>
         ))}
-
-        
       </ul>
+
+      {/* Render the update form if a species is selected for update */}
+      {form.show === 'update' && (
+        <UpdateEndangeredSpeciesForm
+          id={form.selectedSpecies.id}
+          initialData={form.selectedSpecies}
+          onClose={() => setForm({ selectedSpecies: null, show: 'none' })}
+        />
+      )}
     </div>
   )
 }

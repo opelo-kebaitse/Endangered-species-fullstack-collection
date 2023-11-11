@@ -5,7 +5,7 @@ population: number
 }
 
 
-export interface NewEndangeredSpecies{
+export interface EndangeredSpeciesData{
   name: string
   population: number
 }
