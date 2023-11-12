@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom'
-import EndangeredSpeciesList from './EndangeredSpeciesList'
 import Nav from './Nav'
 
 function App() {
