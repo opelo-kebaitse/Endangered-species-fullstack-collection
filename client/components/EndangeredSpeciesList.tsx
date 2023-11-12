@@ -6,6 +6,7 @@ import {
 } from '../apis/endangeredSpecies'
 import UpdateEndangeredSpeciesForm from './UpdateEndangeredSpeciesForm'
 import { EndangeredSpecies } from '../../models/endangeredSpecies'
+import { Link } from 'react-router-dom'
 
 type FormState =
   | {
@@ -62,6 +63,16 @@ export default function EndangeredSpeciesList() {
   
   return (
     <div>
+
+      {/* Render the update form if a species is selected for update */}
+      {form.show === 'update' && (
+          <UpdateEndangeredSpeciesForm
+            id={form.selectedSpecies.id}
+            initialData={form.selectedSpecies}
+            onClose={() => setForm({ selectedSpecies: null, show: 'none' })}
+          />
+      )}
+
       <ul>
         {species.map((species) => (
           <li key={species.id}>
@@ -74,14 +85,7 @@ export default function EndangeredSpeciesList() {
         ))}
       </ul>
 
-      {/* Render the update form if a species is selected for update */}
-      {form.show === 'update' && (
-        <UpdateEndangeredSpeciesForm
-          id={form.selectedSpecies.id}
-          initialData={form.selectedSpecies}
-          onClose={() => setForm({ selectedSpecies: null, show: 'none' })}
-        />
-      )}
+  
     </div>
   )
 }

@@ -6,12 +6,10 @@ function App() {
   return (
     <>
       <header className="header">
-        <h1>Endangered Species </h1>
       </header>
       <section className="main">
       </section>
       <Nav/>
-      <EndangeredSpeciesList/>
       <Outlet />
     </>
   )

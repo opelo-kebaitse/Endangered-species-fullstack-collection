@@ -6,3 +6,9 @@ body {
   padding: 20px;
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
+
+.title-link {
+  text-decoration: none;
+  color: #32a653;
+}
