@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { addEndangeredSpecies } from '../apis/endangeredSpecies'
 import { EndangeredSpeciesData } from '../../models/endangeredSpecies';
+import { useNavigate } from 'react-router-dom';
 
 const AddEndangeredSpeciesForm = () => {
   const [formData, setFormData] = useState<EndangeredSpeciesData>({
@@ -21,9 +22,13 @@ const AddEndangeredSpeciesForm = () => {
     },
   })
 
+  const navigate = useNavigate()
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     mutation.mutate(formData)
+    navigate('/')
+
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
